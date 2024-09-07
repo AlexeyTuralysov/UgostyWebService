@@ -41,7 +41,7 @@ const DonationContainer = (props) => {
             <div className='forms-donate'>
                 <CreateDonation
                     nickname={props.nickname}
-                    email="alexey@gmail.com"
+                    email="test@gmail.com"
                     cookie={itemQuantities.cookie}
                     gingerbread={itemQuantities.gingerbread}
                     cappuccino={itemQuantities.cappuccino}
