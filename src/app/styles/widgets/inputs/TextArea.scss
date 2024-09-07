@@ -1,0 +1,30 @@
+
+input, textarea {
+    width: 100%;
+    /* Заставляем элементы занимать всю ширину формы */
+    margin-bottom: 15px;
+    /* Расстояние между элементами */
+
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 500;
+
+    padding: 10px; /* объединяем padding-top и padding-bottom */
+    border: none;
+    border-radius: .75rem;
+    background-color: var(--secondary);
+    min-width: 100%;
+    margin-bottom: 10px;
+    
+}
+
+
+input::placeholder, textarea::placeholder {
+    text-indent: 10px;
+    
+}
+
+
+textarea {
+    resize: none;
+    padding-bottom: 100px; /* изменено только padding-bottom */
+}

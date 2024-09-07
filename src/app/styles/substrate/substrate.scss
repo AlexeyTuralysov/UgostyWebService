@@ -1,0 +1,93 @@
+@import '/src/app/styles/pages/global/theme';
+
+body {
+  font-family: "Montserrat Alternates", sans-serif;
+  background-color: var(--background);
+  //color: var(--tertiary);
+}
+
+h3 {
+  color: var(--text);
+}
+
+@mixin substrate($display) {
+  display: $display;
+  border-radius: 15px;
+  
+}
+
+.substrate {
+  padding: 20px;
+  background-color: var(--substrate-color);
+
+  &.block-items-donation {
+    @include substrate(flex);
+    background-color: var(--primary-dark);
+    gap: 10px;
+    width: auto;
+  }
+
+  &.block-donation {
+    @include substrate(block);
+    box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.1);
+
+    @media (min-width: 1024px) {
+      max-width: 50%;
+      margin: 0 auto;
+      /* Центрируем контейнер по горизонтали */
+    }
+  }
+}
+
+.block-count {
+  text-align: center;
+
+  span {
+    font-size: 15px;
+  }
+
+}
+
+.forms-donate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: auto;
+  margin: 0 auto;
+}
+
+
+.circle-image {
+  border: 2px solid transparent;
+  display: flex;
+  width: 50px;
+  height: 50px;
+  background-color: var(--tertiary);
+  border-radius: 50%;
+
+  transition: border-color 0.3s ease;
+
+  img {
+    height: 50px;
+    width: auto;
+    margin: 0 auto;
+  }
+
+
+}
+
+
+
+.selected {
+  border-color: #ff5e00;
+  /* Цвет обводки при выборе */
+}
