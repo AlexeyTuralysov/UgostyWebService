@@ -43,7 +43,7 @@ const CreateDonation = ({ nickname, email, gingerbread, cookie, cappuccino, onPa
 
     return (
         <form onSubmit={handleSubmit}>
-            <Inputusertag custom_text="Имя или ваш @тег соцсети" value={nicknameState} onChange={(e) => setNicknameState(e.target.value)} />
+            <Inputusertag c custom_text="Имя или ваш @тег соцсети" value={nicknameState} onChange={(e) => setNicknameState(e.target.value)} />
             <TextAreaProps custom_text='Похлебай чаю...' value={customText} onChange={(e) => setCustomText(e.target.value)} />
             <button className='button button--pay' type="submit">Угостить</button>
         </form>

@@ -3,7 +3,7 @@ import './../../app/styles/widgets/inputs/input.scss'
 
 
 const Inputusertag =(props) => {
-  return  <input type="text" name="user-tag" placeholder={props.custom_text}  />;
+  return  <input className='input' type="text" name="user-tag" placeholder={props.custom_text}  />;
   
 }
 
