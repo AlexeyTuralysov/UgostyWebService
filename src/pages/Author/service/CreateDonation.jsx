@@ -5,46 +5,47 @@ import { paymentUrl } from '../../settings';
 import Inputusertag from '../../../shared/inputs/Inputusertag';
 import TextAreaProps from '../../../shared/inputs/TextAreaProps';
 
-const CreateDonation = ({ nickname, email, gingerbread, cookie, cappuccino, onPaymentSuccess, onPaymentError }) => {
+const CreateDonation = ({ nickname, email, items, onPaymentSuccess, onPaymentError }) => {
     const [nicknameState, setNicknameState] = useState(nickname);
     const [customText, setCustomText] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const createDonation = {
-            "nickname": nicknameState,
-            "email_donator": email,
-            "gingerbread": gingerbread,
-            "cookie": cookie,
-            "cappuccino": cappuccino,
-            "quantity": 1
+        const donationPay = {
+            nickname: nicknameState,
+            email_donator: email,
+            items 
         };
 
-        axios.post(paymentUrl + `/donate`, createDonation)
-            .then((res) => {
-                console.log(res.data);
-                window.location.assign(res.data.confirmation_url);
+        try {
+            const response = await axios.post(`${paymentUrl}/donate`, donationPay);
+            console.log(response.data);
+            window.location.assign(response.data.confirmation_url);
 
-                console.log(createDonation);
-
-                if (onPaymentSuccess) {
-                    onPaymentSuccess(res.data);
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                if (onPaymentError) {
-                    onPaymentError(error);
-                }
-            });
+            if (onPaymentSuccess) {
+                onPaymentSuccess(response.data);
+            }
+        } catch (error) {
+            console.error('ошибка платежа:', error);
+            if (onPaymentError) {
+                onPaymentError(error);
+            }
+        }
     };
-
 
     return (
         <form onSubmit={handleSubmit}>
-            <Inputusertag c custom_text="Имя или ваш @тег соцсети" value={nicknameState} onChange={(e) => setNicknameState(e.target.value)} />
-            <TextAreaProps custom_text='Похлебай чаю...' value={customText} onChange={(e) => setCustomText(e.target.value)} />
+            <Inputusertag
+                custom_text="Имя или ваш @тег соцсети"
+                value={nicknameState}
+                onChange={(e) => setNicknameState(e.target.value)}
+            />
+            <TextAreaProps
+                custom_text='Похлебай чаю...'
+                value={customText}
+                onChange={(e) => setCustomText(e.target.value)}
+            />
             <button className='button button--pay' type="submit">Угостить</button>
         </form>
     );
@@ -53,12 +54,12 @@ const CreateDonation = ({ nickname, email, gingerbread, cookie, cappuccino, onPa
 CreateDonation.propTypes = {
     nickname: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-
-    gingerbread: PropTypes.number.isRequired,
-    cookie: PropTypes.number.isRequired,
-    cappuccino: PropTypes.number.isRequired,
-
-    quantity: PropTypes.number,
+    items: PropTypes.arrayOf(
+        PropTypes.shape({
+            bun_name: PropTypes.string.isRequired,
+            quantity: PropTypes.number.isRequired,
+        })
+    ).isRequired,
     onPaymentSuccess: PropTypes.func,
     onPaymentError: PropTypes.func,
 };

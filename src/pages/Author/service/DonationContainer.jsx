@@ -1,64 +1,67 @@
-import { useState } from 'react';
-
-import CreateDonation from './CreateDonation';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import CreateDonation from './CreateDonation';
 import { Greeting } from '../../../entities/thecase/getNameInDative';
-
-import BlockSelector from './BlockSelection'; // Импортируем компонент выбора блока
-import QuantityInput from './QuantityInput'; // Импортируем компонент ввода количества
+import BlockSelector from './BlockSelection';
+import QuantityInput from './QuantityInput'; 
 
 const DonationContainer = (props) => {
+    const [selectedItem, setSelectedItem] = useState('cappuccino'); // выбранная плюшка 
+    const [selectedPrice, setSelectedPrice] = useState(0); // цена выбранного элемента
+    const [quantity, setQuantity] = useState(1); // кол выбранного элемента
+    const [totalPrice, setTotalPrice] = useState(0); // Общая сумма
+    const [items, setItems] = useState([]); // массив элементов для пожертвования
 
-    const [selectedItem, setSelectedItem] = useState('cappuccino'); // Состояние для выбранного блока
-    const [value, setValue] = useState(1); // Состояние для количества
-
-    // Функция обработки выбора блока
-    const handleBlockSelect = (item) => {
-        setSelectedItem(item); // Устанавливаем выбранный блок
-        setValue(''); // Сбрасываем количество при выборе нового блока
+    // функция выбора плюшек
+    const handleBlockSelect = (item, price) => {
+        setSelectedItem(item); 
+        setSelectedPrice(price); 
+        setQuantity(1); 
     };
 
-    // Функция обработки изменения значения в input
+    // функция обработки изменения количества
     const handleQuantityChange = (newValue) => {
-        setValue(newValue);
+        setQuantity(newValue);
     };
 
-    const getGingerbreadValue = selectedItem === 'gingerbread' ? parseInt(value) || 0 : 0;
-    const getCookieValue = selectedItem === 'cookie' ? parseInt(value) || 0 : 0;
-    const getCappuccinoValue = selectedItem === 'cappuccino' ? parseInt(value) || 0 : 0;
+    // Подсчет общей суммы и обновление массива 'items'
+    useEffect(() => {
+        setTotalPrice(selectedPrice * quantity); // общая сумма = цена плюшки * количество
 
+        // обновляем массив 'items' для передачи в `CreateDonation`
+        setItems([
+            {
+                bun_name: selectedItem, // Название (плюшки)
+                quantity: quantity // Количество выбранной плюшки
+            }
+        ]);
+    }, [selectedItem, selectedPrice, quantity]);
 
     return (
         <div className='substrate block-donation'>
-
             <div className='substrate block-items-donation'>
                 <BlockSelector selectedItem={selectedItem} onSelect={handleBlockSelect} />
-
                 <QuantityInput
                     selectedItem={selectedItem}
-                    value={value}
+                    value={quantity}
                     onChange={handleQuantityChange}
                 />
-
             </div>
 
-
             <Greeting name={props.nickname} />
-
+            <div>
+                <h3>Общая сумма: {totalPrice} ₽</h3>
+            </div>
 
             <div className='forms-donate'>
                 <CreateDonation
                     nickname={props.nickname}
                     email={"alexey@gmail.com"}
-                    gingerbread={getGingerbreadValue}
-                    cookie={getCookieValue}
-                    cappuccino={getCappuccinoValue}
-                    onPaymentSuccess={() => alert('Платеж прошел успешно!')}
-                    onPaymentError={() => alert('Произошла ошибка при оплате!')}
+                    items={items} 
+                    onPaymentSuccess={() => alert('платеж прошел')}
+                    onPaymentError={() => alert('ошибка при оплате!')}
                 />
             </div>
-
-
         </div>
     );
 };

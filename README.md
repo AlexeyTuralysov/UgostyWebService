@@ -1,8 +1,35 @@
-# React + Vite
+# Угости - Сервис для донатов
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Угости - это донат-сервис, позволяющий пользователям угостить плюшками авторов цифрового контента
 
-Currently, two official plugins are available:
+## Возможности
+- Возможность добавления сообщений при отправке доната.
+- Возможность создать платёж.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Требования
+
+- **Docker** и **Docker Compose**.
+- Node.js — v20.15.0 (если запускается вне Docker).
+
+## Установка и Запуск через Docker
+
+### Шаг 1: Клонирование репозитория
+
+Клонируйте репозиторий:
+
+```bash
+git clone https://github.com/AlexeyTuralysov/UgostyFrontend.git
+cd UgostyFrontend
+
+```
+
+### Шаг 1: Запуск в Docker
+
+
+```bash
+
+docker-compose up
+
+```
+

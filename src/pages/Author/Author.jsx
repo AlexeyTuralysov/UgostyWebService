@@ -112,9 +112,14 @@ export default function Author() {
           </div>
 
           <div className='user-stats'>
-            <StatTreats count={data.cappuccino} clases="treats treats-orange" image="/src/assets/img/donate/pryanic_treats.png" />
-            <StatTreats count={data.cookie} clases="treats treats-beige"  image="/src/assets/img/donate/cookie2.png" />
-            <StatTreats count={data.gingerbread} clases="treats treats-rose" image="/src/assets/img/donate/pryanic.png" />
+            {data.buns && data.buns.map((bunItem, index) => (
+              <StatTreats
+                key={index}
+                count={bunItem.quantity}
+                clases="treats treats-orange"
+                image={bunItem.bun.img_buns}
+              />
+            ))}
           </div>
         </div>
 

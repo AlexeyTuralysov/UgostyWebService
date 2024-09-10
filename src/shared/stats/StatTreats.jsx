@@ -2,6 +2,8 @@ import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
 import '../../app/styles/shared/stats/statsTreats.scss';
 import { useEffect } from 'react';
+import { backEnd } from '../../pages/settings';
+
 
 function StatTreats(props) {
     const { count } = props;
@@ -21,7 +23,7 @@ function StatTreats(props) {
 
     return (
         <div className={props.clases}>
-            <img src={props.image} alt="Stat Icon" />
+            <img src={ backEnd + props.image} alt="Stat Icon" />
             <animated.span id='out'>
                 {animationProps.number.to(val => val.toFixed(0))}
             </animated.span>
