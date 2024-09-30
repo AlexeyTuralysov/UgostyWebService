@@ -5,18 +5,23 @@ import { paymentUrl } from '../../settings';
 import Inputusertag from '../../../shared/inputs/Inputusertag';
 import TextAreaProps from '../../../shared/inputs/TextAreaProps';
 
-const CreateDonation = ({ nickname, email, items, onPaymentSuccess, onPaymentError }) => {
+const CreateDonation = ({ nickname, items, onPaymentSuccess, onPaymentError, sumPrice }) => {
     const [nicknameState, setNicknameState] = useState(nickname);
+
+    const [socialLink, setsocialLink] = useState('');
     const [customText, setCustomText] = useState('');
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const donationPay = {
             nickname: nicknameState,
-            email_donator: email,
-            items 
+            social_media: socialLink,
+            donation_message: customText,
+            items
         };
+        console.log('Отправляемые данные:', donationPay);
 
         try {
             const response = await axios.post(`${paymentUrl}/donate`, donationPay);
@@ -38,15 +43,21 @@ const CreateDonation = ({ nickname, email, items, onPaymentSuccess, onPaymentErr
         <form onSubmit={handleSubmit}>
             <Inputusertag
                 custom_text="Имя или ваш @тег соцсети"
-                value={nicknameState}
-                onChange={(e) => setNicknameState(e.target.value)}
+                value={socialLink}
+                onChange={(e) => {
+                    setsocialLink(e.target.value);
+                   
+                }}
             />
             <TextAreaProps
                 custom_text='Похлебай чаю...'
                 value={customText}
-                onChange={(e) => setCustomText(e.target.value)}
+                onChange={(e) => {
+                    setCustomText(e.target.value);
+                    
+                }}
             />
-            <button className='button button--pay' type="submit">Угостить</button>
+            <button className='button button--pay' type="submit">Угостить {sumPrice} ₽</button>
         </form>
     );
 };
@@ -54,12 +65,14 @@ const CreateDonation = ({ nickname, email, items, onPaymentSuccess, onPaymentErr
 CreateDonation.propTypes = {
     nickname: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
+
     items: PropTypes.arrayOf(
         PropTypes.shape({
             bun_name: PropTypes.string.isRequired,
             quantity: PropTypes.number.isRequired,
         })
     ).isRequired,
+    sumPrice: PropTypes.isRequired,
     onPaymentSuccess: PropTypes.func,
     onPaymentError: PropTypes.func,
 };

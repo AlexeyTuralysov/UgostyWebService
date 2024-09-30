@@ -14,10 +14,10 @@ export default function AuthorSkeleton() {
 
             </div>
             <div className='user-stats-skeleton'>
-                <Skeleton width={100} height={20} />
+                <Skeleton width={100} height={30} />
 
-                <Skeleton width={100} height={20} />
-                <Skeleton width={100} height={20} />
+                <Skeleton width={100} height={30} />
+                <Skeleton width={100} height={30} />
 
             </div>
         </div >

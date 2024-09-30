@@ -17,7 +17,7 @@ export default function EditProfile() {
 
   return (
     <div>
-      <h1>dasd</h1>
+      <h1>Редакт</h1>
     </div>
   );
 }

@@ -16,16 +16,39 @@ h3 {
   
 }
 
+@mixin for-phones {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
 .substrate {
   padding: 20px;
+  width: 600px;
   background-color: var(--substrate-color);
+
+  @include for-phones {
+    width: auto;
+    
+  }
 
   &.block-items-donation {
     @include substrate(flex);
     background-color: var(--primary-dark);
-    gap: 10px;
     width: auto;
+    
+    overflow: hidden;
+
+    justify-content: space-between;
+
+ 
+    .child-item {
+      display: flex;
+      gap: 10px
+    }
+
   }
+  
 
   &.block-donation {
     @include substrate(block);
@@ -34,10 +57,12 @@ h3 {
     @media (min-width: 1024px) {
       max-width: 50%;
       margin: 0 auto;
-      /* Центрируем контейнер по горизонтали */
+     
     }
   }
 }
+
+
 
 .block-count {
   text-align: center;
@@ -89,5 +114,5 @@ form {
 
 .selected {
   border-color: #ff5e00;
-  /* Цвет обводки при выборе */
+  
 }

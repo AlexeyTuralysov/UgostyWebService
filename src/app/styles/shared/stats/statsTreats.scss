@@ -4,42 +4,24 @@
     
 }
 
-.treats {
-  
 
+
+
+
+.treats {
     display: flex;
     justify-content: space-between;
     overflow: hidden;
-
     padding: 15px;
     gap: 10px;
-    
     height: 15px;
     min-width: 60px;
-
-
     border-radius: 20px;
     align-items: center;
     color: var(--stats);
+    background-color: inherit; /* Добавьте это, чтобы убедиться, что фон наследуется */
 
-    &-orange {
-        @include apply-color(#FFB800)
-
-    }
-    &-red {
-        @include apply-color(#ff6a6a)
-
-    }
-
-    &-beige {
-        @include apply-color(#fff8ea)
-
-    }
-
-    &-rose {
-        @include apply-color(#ff5454)
-
-    }
+    
     
 
     img {
@@ -51,3 +33,4 @@
         
     }
 }
+

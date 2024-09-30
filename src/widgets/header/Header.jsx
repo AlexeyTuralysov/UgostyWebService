@@ -1,6 +1,5 @@
 import '../../app/styles/widgets/header/hedaer.scss'
 
-
 export default function Header() {
   return (
     <div className='header'>

@@ -18,18 +18,19 @@ const Auth = () => {
             });
             localStorage.setItem('token', response.data.access);
 
-            navigate('/' + response.username);
-            // Дополнительная логика после успешного входа
+            
+            navigate('/' + username);
+            
         } catch (error) {
-            console.error('Ошибка входа:', error);
+            console.error('ошибка входа:', error);
         }
     };
 
     return (
         <div>
-            <input type="text" placeholder="Имя пользователя" value={username} onChange={(e) => setUsername(e.target.value)} />
-            <input type="password" placeholder="Пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}>Войти</button>
+            <input type="text" placeholder="имя пользователя" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input type="password" placeholder="пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <button onClick={handleLogin}>войти</button>
         </div>
     );
 };

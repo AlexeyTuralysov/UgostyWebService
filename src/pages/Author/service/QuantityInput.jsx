@@ -8,7 +8,7 @@ export default function QuantityInput({ selectedItem, value, onChange, min = 1, 
         const newValue = parseInt(event.target.value, 10);
         
         if (newValue >= min && newValue <= max) {
-            onChange(newValue); // Передаем новое значение наверх
+            onChange(newValue); 
         }
 
     };

@@ -4,26 +4,24 @@ import '../../app/styles/shared/stats/statsTreats.scss';
 import { useEffect } from 'react';
 import { backEnd } from '../../pages/settings';
 
-
 function StatTreats(props) {
-    const { count } = props;
+    const { count, color, image } = props;
+
+
 
     const [animationProps, api] = useSpring(() => ({
         from: { number: 0 },
-        number: count,
+        to: { number: count },
         config: { duration: 1000 },
     }));
 
     useEffect(() => {
-        api.start({
-            from: { number: 0 },
-            to: { number: count },
-        });
+        api.start({ to: { number: count } });
     }, [count, api]);
 
     return (
-        <div className={props.clases}>
-            <img src={ backEnd + props.image} alt="Stat Icon" />
+        <div className="treats" style={{ backgroundColor: color }}>
+            <img src={backEnd + image} alt="Stat Icon" />
             <animated.span id='out'>
                 {animationProps.number.to(val => val.toFixed(0))}
             </animated.span>
@@ -33,7 +31,7 @@ function StatTreats(props) {
 
 StatTreats.propTypes = {
     image: PropTypes.string.isRequired,
-    clases: PropTypes.string.isRequired,
+    color: PropTypes.string,
     count: PropTypes.number.isRequired,
 };
 

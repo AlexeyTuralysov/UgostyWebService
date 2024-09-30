@@ -7,38 +7,36 @@ import { backEnd } from '../../settings'
 
 const BlockSelector = ({ selectedItem, onSelect }) => {
 
-    const [buns, setBuns] = useState([]);
+    const [bunsState, setBunsState] = useState([]);
     const [error, setError] = useState(null);
 
-    // Функция для запроса данных с сервера
-    const fetchBuns = async () => {
-        try {
-            const response = await axios.get(backEnd + '/api/buns/');
-            setBuns(response.data); // Устанавливаем данные
-        } catch (error) {
-            setError('Не удалось загрузить данные. Пожалуйста, попробуйте позже.');
-        }
-    };
-
     useEffect(() => {
-        fetchBuns();
+        axios.get(backEnd + '/api/buns/')
+            .then(BunsGet => {
+                setBunsState(BunsGet.data);
+            })
+            .catch(error => {
+                setError('не удалось загрузить данные',error);
+            });
     }, []);
+
+    
+    
 
 
     return (
         <>
-            {buns.map(bun => (
+            {bunsState.map(bun => (
                 <div
                     key={bun.id}
                     className={`circle-image ${selectedItem === bun.name ? 'selected' : ''}`}
-                    onClick={() => onSelect(bun.name, bun.price)} // Передаем имя и цену выбранной булочки
+                    onClick={() => onSelect(bun.name, bun.price)} 
                 >
                     <img src={bun.img_buns} alt={bun.name} />
                   
 
                 </div>
             ))}
-
 
 
 

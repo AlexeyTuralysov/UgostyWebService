@@ -3,7 +3,7 @@ import axios from "axios";
 import { baseUrl } from "../settings";
 
 export default function PayDonation() {
-    const [data, setData] = useState([]); // Инициализируем как пустой массив
+    const [data, setData] = useState([]);
 
     const jwtToken = localStorage.getItem('token');
     const config = {
@@ -17,15 +17,11 @@ export default function PayDonation() {
             axios
                 .get(baseUrl + "/api/user/payments/", config)
                 .then((res) => {
-                    // Убедимся, что данные это массив
-                    if (Array.isArray(res.data)) {
-                        setData(res.data); // Если это массив, устанавливаем его в состояние
-                    } else {
-                        console.error("Ожидался массив, но получены другие данные.", res.data);
-                    }
+                    console.log(res.data);
+                    setData(res.data);
                 })
                 .catch((e) => {
-                    console.error("Ошибка при получении данных:", e);
+                    console.error("ошибка при получении данных:", e);
                 });
         } else {
             console.log("JWT токен не найден");
@@ -35,13 +31,23 @@ export default function PayDonation() {
     return (
         <ul>
             {data.length > 0 ? (
-                data.map((payment) => (
-                    <li key={payment.id}>
-                        <p>Status: {payment.status}</p>
-                    </li>
+                data.map((donate) => (
+
+
+                    <div key={donate.id}>
+                        <h1>{donate.social_media}</h1>
+
+                        {donate.donation_message ? (
+                            <p>{donate.donation_message}</p>
+                        ) : (
+                            <p>пустое поле</p>
+                        )}
+                      
+
+                    </div>
                 ))
             ) : (
-                <li>No payments found</li>
+                <li>данных нет</li>
             )}
         </ul>
     );
