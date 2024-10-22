@@ -3,15 +3,15 @@
 :root {
     font-family: "Montserrat Alternates", sans-serif;
 
-    --background-light: white;  
-    --primary-light: #e0e0e0;
+    --background-light: white; // цвет для фона 
+    --primary-light: #e0e0e0; 
     
     --text-light: rgb(36, 36, 36);  // цвет текста h3
     --stats-light:rgb(36, 36, 36);//цвет текста статистики
 
     --secondary-light: #eeeeee; //эллементыпо типу input textarea
     --tertiary-light: rgb(247, 247, 247); 
-    --substrate-color-light: #fdfdfd;
+    --substrate-color-light: #fdfdfd; // цвет для фона 
 
 
 
@@ -23,8 +23,8 @@
     --stats-dark: #ffd47d; //цвет текста статистики
     
     --secondary-dark: #fdfdfd; //эллементыпо типу input textarea
-    --tertiary-dark: #ffd47d;
-    --substrate-color-dark: #ffffff;
+    --tertiary-dark: #474747;
+    --substrate-color-dark: #252525; // цвет для фона 
 }
 
 /* Стиль для светлой темы */
@@ -33,6 +33,7 @@
     --primary: var(--primary-light);
     --text: var(--text-light); 
     --stats: var(--stats-light);
+
     --secondary: var(--secondary-light);
     --tertiary: var(--tertiary-light); 
     --substrate-color: var(--substrate-color-light);
@@ -44,6 +45,7 @@
     --primary: var(--primary-dark);
     --text: var(--text-dark); 
     --stats: var(--stats-dark);
+
     --secondary: var(--secondary-dark);
     --tertiary: var(--tertiary-dark);
     --substrate-color: var(--substrate-color-dark);

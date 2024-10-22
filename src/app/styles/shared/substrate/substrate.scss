@@ -1,4 +1,5 @@
-@import '/src/app/styles/pages/global/theme';
+//@import '/src/app/styles/pages/global/theme';
+@import '/src/app/styles/pages/global/theme_new';
 
 body {
   font-family: "Montserrat Alternates", sans-serif;
@@ -7,13 +8,13 @@ body {
 }
 
 h3 {
-  color: var(--text);
+  color: var(--text-color);
 }
 
 @mixin substrate($display) {
   display: $display;
   border-radius: 15px;
-  
+
 }
 
 @mixin for-phones {
@@ -25,30 +26,30 @@ h3 {
 .substrate {
   padding: 20px;
   width: 600px;
-  background-color: var(--substrate-color);
+  background-color: var(--substrate-bg-color);
 
   @include for-phones {
     width: auto;
-    
   }
 
   &.block-items-donation {
     @include substrate(flex);
-    background-color: var(--primary-dark);
-    width: auto;
+    background-color: var(--substrate-bg-color-second);
     
+    width: auto;
+
     overflow: hidden;
 
     justify-content: space-between;
 
- 
+
     .child-item {
       display: flex;
       gap: 10px
     }
 
   }
-  
+
 
   &.block-donation {
     @include substrate(block);
@@ -57,7 +58,25 @@ h3 {
     @media (min-width: 1024px) {
       max-width: 50%;
       margin: 0 auto;
-     
+
+    }
+  }
+
+
+  &.block-donation-banned {
+    @include substrate(block);
+    box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.1);
+
+    @media (min-width: 1024px) {
+      max-width: 50%;
+      margin: 0 auto;
+
+    }
+
+    img {
+      width: 50%;
+      margin-left: 50%;
+      transform: translateX(-50%);
     }
   }
 }
@@ -79,6 +98,27 @@ h3 {
   align-items: center;
   justify-content: center;
   width: 100%;
+
+  &.banned {
+    background-color: var(--substrate-bg-color-second);
+    border-radius: 13px;
+    margin-bottom: 20px;
+
+    // Миксин для разных вариантов высоты
+    @mixin banned($height) {
+      height: $height;
+    }
+
+    &-30 {
+      @include banned(30px);
+    }
+
+    &-80 {
+      @include banned(90px);
+    }
+
+
+  }
 }
 
 form {
@@ -96,7 +136,7 @@ form {
   display: flex;
   width: 50px;
   height: 50px;
-  background-color: var(--tertiary);
+  background-color: var(--substrate-bg-color-third);
   border-radius: 50%;
 
   transition: border-color 0.3s ease;
@@ -114,5 +154,5 @@ form {
 
 .selected {
   border-color: #ff5e00;
-  
+
 }

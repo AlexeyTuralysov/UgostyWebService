@@ -16,7 +16,7 @@ export default function EditProfile() {
   }, [author, navigate]);
 
   return (
-    <div>
+    <div className='content'>
       <h1>Редакт</h1>
     </div>
   );

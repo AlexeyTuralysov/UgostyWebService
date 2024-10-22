@@ -1,40 +1,46 @@
 
 .input, textarea {
     width: 100%;
-    /* Заставляем элементы занимать всю ширину формы */
     margin-bottom: 15px;
-    /* Расстояние между элементами */
+
 
     font-family: "Montserrat Alternates", sans-serif;
     font-weight: 500;
 
-    padding: 10px; /* объединяем padding-top и padding-bottom */
+    padding: 10px;
     border: none;
     border-radius: .75rem;
-    background-color: var(--secondary);
+    background-color: var(--substrate-bg-color-second);
     min-width: 100%;
     margin-bottom: 10px;
+
+    color: var(--text-color);
     
 }
 
 
 .input::placeholder, textarea::placeholder {
-    text-indent: 10px;
-    
+    color: var(--text-color);
 }
 
 .input_number[type="number"]{
+    font-family: "Montserrat Alternates", sans-serif;
+
     -moz-appearance: textfield;
     width: 50px;
     text-align: center;
     border-radius: 15px;
     border: solid yellow 2px ;
+
+    color: var(--text-color);
+    background-color: var(--substrate-bg-color-second);
+    font-size: 20px;
     
     
 }
 .input_number[type="number"]:focus {
     border: solid yellow 2px;
-    
+  
 }
 
 input::-webkit-outer-spin-button,

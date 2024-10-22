@@ -1,54 +1,100 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import { baseUrl } from "../settings";
+import apiClient from "../settings";
+
+import Message from "./messages/Messages";
+import "../../app/styles/shared/substrate/substrate_new.scss"
+
+import ChartDate from "../../widgets/Charts/Payers/ChartDate";
+import "../../app/styles/shared/select/select.scss"
+import "../../app/styles/pages/ProfileManager/Manager.scss"
+
+import moment from 'moment';
+import { sortDate } from "./filters/sortDate";
 
 export default function PayDonation() {
-    const [data, setData] = useState([]);
+    const [dataDonations, setDataDonations] = useState([]);
 
-    const jwtToken = localStorage.getItem('token');
-    const config = {
-        headers: {
-            Authorization: `Bearer ${jwtToken}`
-        }
-    };
+    const [filter, setfilter] = useState('all');
+    const [countFilter, setCountFilter] = useState(5);
+
+    const filteredDonations = useMemo(() => {
+        return sortDate({ payloads: dataDonations, filter, count: countFilter });
+    }, [dataDonations, filter, countFilter]);
+
+    const getDonationsData = useCallback(async () => {
+
+        await axios
+        apiClient.get("/api/user/payments/")
+            .then((res) => {
+                if (res.data.length > 0) {
+                    console.log(res.data);
+                    setDataDonations(res.data);
+                    console.log("запись данных это рендер");
+                }
+                else {
+                    setDataDonations([]);
+                }
+
+            })
+            .catch((e) => {
+
+                console.error("ошибка при получении данных:", e);
+            });
+
+    }, [])
 
     useEffect(() => {
-        if (jwtToken) {
-            axios
-                .get(baseUrl + "/api/user/payments/", config)
-                .then((res) => {
-                    console.log(res.data);
-                    setData(res.data);
-                })
-                .catch((e) => {
-                    console.error("ошибка при получении данных:", e);
-                });
-        } else {
-            console.log("JWT токен не найден");
-        }
-    }, [jwtToken]);
+        getDonationsData();
+    }, [getDonationsData]);
+
+    const handleSelect = useCallback((e) => {
+        setfilter(e.target.value);
+    }, []);
+
 
     return (
-        <ul>
-            {data.length > 0 ? (
-                data.map((donate) => (
+        <>
+            <div className='content'>
+                <h1 className="text">Последние угощения</h1>
+
+                <select className="select" value={filter} onChange={handleSelect}>
+                    <option value="all">За все время</option>
+                    <option value="1day">За один день</option>
+                    <option value="1week">За неделю</option>
+                </select>
 
 
-                    <div key={donate.id}>
-                        <h1>{donate.social_media}</h1>
+                <select className="select" value={countFilter} onChange={(e) => setCountFilter(e.target.value)}>
+                    <option value={5}>5 последних</option>
+                    <option value={10}>10 последних</option>
+                    <option value={1000}>Все</option>
+                </select>
 
-                        {donate.donation_message ? (
-                            <p>{donate.donation_message}</p>
+
+                <div className="screen-slice " >
+                    <div className="block-sp">
+                        {filteredDonations && filteredDonations.length > 0 ? (
+                            filteredDonations.map((donate) => (
+                                <Message
+                                    key={donate.id}
+                                    socialName={donate.social_media}
+                                    message={donate.donation_message}
+                                    date={moment(donate.created_at).format('LL')}
+                                    pay={800} />
+                            ))
                         ) : (
-                            <p>пустое поле</p>
+                            <span>Нет данных</span>
                         )}
-                      
-
                     </div>
-                ))
-            ) : (
-                <li>данных нет</li>
-            )}
-        </ul>
+
+                    <div className="sub-statistics">
+                        <h3>Статистика</h3>
+                        <ChartDate stats={filteredDonations} />
+                    </div>
+
+                </div>
+            </div>
+        </>
     );
 }

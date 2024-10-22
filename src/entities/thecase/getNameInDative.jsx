@@ -8,7 +8,7 @@ import { inclineLastname } from 'lvovich';
 export function Greeting({ name }) {
 
   const detectLanguage = (name) => {
-    const cyrillicPattern = /[а-яА-ЯЁё]/; // Проверка на наличие кириллических символов
+    const cyrillicPattern = /[а-яА-ЯЁё]/;
     return cyrillicPattern.test(name) ? 'ru' : 'en';
   };
 
@@ -16,15 +16,15 @@ export function Greeting({ name }) {
   let result;
 
   if (language === 'ru') {
-      result = inclineLastname(name, 'dative'); // Склоняем русское имя
+      result = inclineLastname(name, 'accusative');
   } else if (language === 'en') {
-      result = name.endsWith('s') ? `${name}'` : `${name}'s`; // Притяжательная форма для английского имени
+      result = name.endsWith('s') ? `${name}'` : `${name}'s`; 
   } else {
-      result = name; // Если язык не определен, возвращаем имя как есть
+      result = name; 
   }
 
   return (
-    <h3 >Задонатить {result}</h3>
+    <h3 >Угости {result}</h3>
   );
 }
 
