@@ -1,9 +1,52 @@
-version: '3'
+version: '3.9'
 
 services:
-  web:
-    build: .
+  frontend:
+    container_name: frontend
+
+    build: 
+      context: ./ugostyFrontend
+      dockerfile: Dockerfile
+   
+
+    
     ports:
-      - "80:80"
-    restart: always
-  
+      - "80:80" 
+
+  backend-main:
+    container_name: backend
+    command: gunicorn UgostyMainService.wsgi:application --bind 0.0.0.0:8000
+
+    build: 
+      context: ./UgostyMainService
+      dockerfile: Dockerfile
+
+    volumes:
+    - ./UgostyMainService/:/usr/src/UgostyMainService/
+
+    ports:
+    - "8000:8000"
+
+    env_file:
+      - /UgostyMainService/ .env.dev
+
+    depends_on:
+      - db
+
+  db:
+    container_name: ugostyPgDB
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+    environment:
+      - POSTGRES_USER=hello_django
+      - POSTGRES_PASSWORD=hello_django
+      - POSTGRES_DB=hello_django_dev
+
+
+volumes:
+  postgres_data:
+
+
+
